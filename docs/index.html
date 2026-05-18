@@ -413,6 +413,149 @@
       color: var(--text-secondary);
     }
 
+    .h-annotation {
+      margin-top: 8px;
+    }
+
+    .h-annotation summary {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      cursor: pointer;
+      padding: 4px 0;
+    }
+
+    .h-annotation summary:hover {
+      text-decoration: underline;
+    }
+
+    .h-annotation-content {
+      padding: 12px 0 4px;
+    }
+
+    .h-annotation-content h4 {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 10px 0 4px;
+    }
+
+    .h-annotation-content h4:first-child {
+      margin-top: 0;
+    }
+
+    .h-annotation-content p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 6px;
+    }
+
+    .h-annotation-content ul {
+      list-style: disc;
+      padding-left: 20px;
+      margin-bottom: 8px;
+    }
+
+    .h-annotation-content li {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      padding: 2px 0;
+    }
+
+    .candidate {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid #f59e0b;
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 12px;
+    }
+
+    .candidate .h-number {
+      color: #d97706;
+    }
+
+    .tag-candidate {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .tag-deferred {
+      background: #f3f4f6;
+      color: #6b7280;
+    }
+
+    .decision-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 12px;
+    }
+
+    .decision-card h3 {
+      font-size: 15px;
+      margin-bottom: 8px;
+    }
+
+    .decision-card .options {
+      list-style: none;
+      padding: 0;
+      margin-top: 8px;
+    }
+
+    .decision-card .options li {
+      font-size: 14px;
+      color: var(--text-secondary);
+      padding: 4px 0;
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .decision-card .options li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 11px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+    }
+
+    .decision-card .options li.leaning::before {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .decision-card .options li.leaning {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .insight-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .insight-list li {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+
+    .insight-list li:last-child {
+      border-bottom: none;
+    }
+
+    .insight-list li strong {
+      color: var(--text);
+    }
+
     footer {
       padding: 32px 0;
       font-size: 13px;
@@ -468,6 +611,20 @@
       <p class="h-rule">The agent can find the right capability from a description of intent, not by trying things until something works.</p>
       <p class="h-detail"><strong>Why for agents:</strong> Humans skim and recover from wrong choices visually. Agents recover by retrying, which is expensive in tokens and dangerous in side effects.</p>
       <p class="h-detail"><strong>Fails when:</strong> Two endpoints with overlapping responsibilities, no clear signal which is canonical. Names don't match the agent's natural framing of intent.</p>
+      <details class="h-annotation"><summary>Prior art, distinct contribution, empirical hooks</summary>
+      <div class="h-annotation-content">
+        <h4>Prior art</h4>
+        <p>Nielsen H1 (visibility of system status) and H6 (recognition over recall). Stylos &amp; Myers (2008) on method placement affecting discoverability. Anthropic "choose tools thoughtfully." MetaTool operationalizes tool selection as measurable behavior.</p>
+        <h4>Distinct contribution</h4>
+        <p>The retry-cost asymmetry: humans recover from wrong choices visually (cheap), agents recover by retrying (expensive in tokens and dangerous in side effects). This makes discoverability more load-bearing for agents, not just differently load-bearing. Existing API-usability work doesn't reckon with this because human retry is essentially free.</p>
+        <h4>Empirical hooks</h4>
+        <ul>
+          <li>MetaTool "whether-and-which tool" accuracy on a real tool catalog</li>
+          <li>&tau;-bench pass^k reliability — discoverability problems show up as pass-rate drop from pass^1 to pass^8</li>
+          <li>Synthetic agent runs: given N realistic intents, what % land on the canonical tool first try?</li>
+        </ul>
+      </div>
+      </details>
     </div>
 
     <div class="heuristic">
@@ -479,6 +636,20 @@
       <p class="h-rule">Inputs and outputs are typed, deterministic, and consistent. The same concept has the same shape across the surface.</p>
       <p class="h-detail"><strong>Why for agents:</strong> Agents pattern-match on shapes more than humans do. A <code>contact</code> that looks one way in one endpoint and another way three calls later is a hallucination magnet.</p>
       <p class="h-detail"><strong>Fails when:</strong> Pagination differs between resources. Date formats vary. ID fields named inconsistently.</p>
+      <details class="h-annotation"><summary>Prior art, distinct contribution, empirical hooks</summary>
+      <div class="h-annotation-content">
+        <h4>Prior art</h4>
+        <p>Bloch (2006) "Names matter" + "minimize mutability." Cognitive Dimensions: Consistency and Role-expressiveness. BFCL operationalizes syntactically/semantically valid calls. StableToolBench studies shape drift over time.</p>
+        <h4>Distinct contribution</h4>
+        <p>Cross-endpoint shape consistency as a distinct usability dimension. Most prior work measures shape correctness per call. v1 names cross-call consistency because agents pattern-match across calls in a session — a <code>contact</code> that looks different in a list response vs a get-by-id response is a hallucination magnet.</p>
+        <h4>Empirical hooks</h4>
+        <ul>
+          <li>BFCL AST-correctness on a domain-specific subset</li>
+          <li>Schema-similarity score across endpoints returning the same conceptual type</li>
+          <li>Agent confusion rate after a shape change in a synthetic eval</li>
+        </ul>
+      </div>
+      </details>
     </div>
 
     <div class="heuristic">
@@ -490,6 +661,20 @@
       <p class="h-rule">Every endpoint, tool, or command returns enough metadata to be understood without out-of-band documentation.</p>
       <p class="h-detail"><strong>Why for agents:</strong> Agents have no prior context unless it was injected into the prompt. A self-describing surface lowers the cost of cold-start use. Schemas, examples, annotations, and inline help are first-class.</p>
       <p class="h-detail"><strong>Fails when:</strong> OpenAPI spec exists but isn't loadable by the agent. MCP tool descriptions are one-liners.</p>
+      <details class="h-annotation"><summary>Prior art, distinct contribution, empirical hooks</summary>
+      <div class="h-annotation-content">
+        <h4>Prior art</h4>
+        <p>Robillard (2009) five factors of API documentation (intent, examples, scenario-matching, penetrability, format). Anthropic "return meaningful context" + "prompt-engineer descriptions." MCP capability negotiation. Bloch's "every API is a little language."</p>
+        <h4>Distinct contribution</h4>
+        <p>The schema-as-prompt insight: for agents, there is no separation between "API contract" and "instructions to the model." Schema text is consumed as natural language. Documentation-as-afterthought is a design failure for agents in a way it isn't for humans, who can fall back on tutorials or asking a teammate.</p>
+        <h4>Empirical hooks</h4>
+        <ul>
+          <li>Token-efficiency at fixed pass rate on &tau;-bench (more self-describing surfaces should reach the same pass rate with fewer tokens)</li>
+          <li>Agent recovery rate when passed schema-only vs schema-plus-docs</li>
+          <li>Description-quality eval per "Learning to Rewrite Tool Descriptions" methodology</li>
+        </ul>
+      </div>
+      </details>
     </div>
 
     <div class="heuristic">
@@ -501,6 +686,20 @@
       <p class="h-rule">Errors are typed, coded, and include structured recovery information. Prose alone fails.</p>
       <p class="h-detail"><strong>Why for agents:</strong> Humans read "Sorry, that didn't work" and infer intent. Agents read it literally and either retry blindly or hallucinate a fix. An error is a second-chance prompt: a structured error that names the problem, lists valid options, and points to relevant docs enables near-100% recovery.</p>
       <p class="h-detail"><strong>Fails when:</strong> All errors are 500s with a string body. Validation errors don't identify the offending field.</p>
+      <details class="h-annotation"><summary>Prior art, distinct contribution, empirical hooks</summary>
+      <div class="h-annotation-content">
+        <h4>Prior art</h4>
+        <p>Nielsen H9 (help users recognize, diagnose, recover from errors). Anthropic guidance on error responses as agent recovery surfaces. 12-Factor Agents "errors as tokens." Robillard (2009) error documentation as API learnability factor.</p>
+        <h4>Distinct contribution</h4>
+        <p>The "error as second-chance prompt" reframe. Errors aren't just observability — they're another input to the agent's next decision. Existing error-design work treats error messages as user feedback; v1 treats them as part of the prompt the agent reads on the next turn. Shifts what counts as a good error: not "what went wrong," but "what would help the agent succeed on retry."</p>
+        <h4>Empirical hooks</h4>
+        <ul>
+          <li>Recovery rate after error injection (invalid arg, unauthorized, rate-limited) — % of traces that recover within N retries</li>
+          <li>Error-content quality: does the error name the field, list valid values, point to docs? (Static measurement)</li>
+          <li>Tokens-to-recovery: how many tokens does an agent spend after an error before a successful retry?</li>
+        </ul>
+      </div>
+      </details>
     </div>
 
     <div class="heuristic">
@@ -512,6 +711,20 @@
       <p class="h-rule">Outputs of one operation match inputs of related operations without translation.</p>
       <p class="h-detail"><strong>Why for agents:</strong> Multi-step agent workflows chain calls. Every translation step (IDs, formats, references) is a place to fail. A composable surface lets the agent move data between calls without reshaping.</p>
       <p class="h-detail"><strong>Fails when:</strong> "List" returns IDs in one shape, "Get" wants a different shape. Reference fields aren't directly callable.</p>
+      <details class="h-annotation"><summary>Prior art, distinct contribution, empirical hooks</summary>
+      <div class="h-annotation-content">
+        <h4>Prior art</h4>
+        <p>Bloch (2006) on small surfaces that compose. Cognitive Dimensions: Hidden dependencies and Viscosity. 12-Factor Agents "structured outputs." Anthropic <em>Code Execution with MCP</em> — the argument that agents writing code over tool outputs is more efficient than chaining direct calls.</p>
+        <h4>Distinct contribution</h4>
+        <p>Cross-surface composability as a usability dimension. v1's territory is API + CLI + MCP, and composability across surfaces (CLI output flows into API input flows into MCP tool call) is a property of coherent platform design. No existing framework names cross-surface composability as a specific heuristic. Note: "without translation" is the most underspecified part of v0 — v1 should sharpen this.</p>
+        <h4>Empirical hooks</h4>
+        <ul>
+          <li>Multi-step task success on &tau;&sup2;-bench / MCP-Bench</li>
+          <li>"Translation overhead": count places in agent traces where the agent reshapes data between calls</li>
+          <li>Static analysis: what fraction of "outputs of X" are valid "inputs to Y" without translation?</li>
+        </ul>
+      </div>
+      </details>
     </div>
 
     <div class="heuristic">
@@ -523,6 +736,20 @@
       <p class="h-rule">Operations declare their idempotency. Agents can retry on failure without guessing at side effects.</p>
       <p class="h-detail"><strong>Why for agents:</strong> Agents retry. A lot. If the platform doesn't tell the agent which operations are safe to retry, the agent will either over-retry (duplicates) or under-retry (give up too easily).</p>
       <p class="h-detail"><strong>Fails when:</strong> No idempotency keys on writes. POST that's actually upsert, not documented as such.</p>
+      <details class="h-annotation"><summary>Prior art, distinct contribution, empirical hooks</summary>
+      <div class="h-annotation-content">
+        <h4>Prior art</h4>
+        <p>Cognitive Dimensions Viscosity (cost to recover from a wrong move). HTTP method semantics (RFC 9110). Stripe API design retrospective on idempotency keys as first-class affordance. 12-Factor Agents assumes retry-safe operations.</p>
+        <h4>Distinct contribution</h4>
+        <p>The agent-retry argument: agents retry much more than humans, and their reasoning is itself non-deterministic. Combining stochastic retry with non-idempotent operations compounds rather than cancels uncertainty. Existing API design treats idempotency as developer convenience; v1 frames it as a usability necessity. Novel claim: idempotency declaration belongs in the schema (machine-readable), not just the docs.</p>
+        <h4>Empirical hooks</h4>
+        <ul>
+          <li>Static: what % of write operations declare idempotency in machine-readable form?</li>
+          <li>Duplicate-side-effect rate under controlled fault injection (force a 500 mid-write, count duplicates)</li>
+          <li>Survey: how often do agent builders write retry wrappers? (Revealed-preference signal)</li>
+        </ul>
+      </div>
+      </details>
     </div>
 
     <div class="heuristic">
@@ -534,6 +761,20 @@
       <p class="h-rule">Responses are lean by default and expandable on request. No mandatory bloat.</p>
       <p class="h-detail"><strong>Why for agents:</strong> Every byte of response goes into a context window the agent has to pay for. A 50-field object when the agent needed two fields is taxation by API design.</p>
       <p class="h-detail"><strong>Fails when:</strong> No field selection. Default response includes deeply nested associations. Pagination defaults to absurdly large pages.</p>
+      <details class="h-annotation"><summary>Prior art, distinct contribution, empirical hooks</summary>
+      <div class="h-annotation-content">
+        <h4>Prior art</h4>
+        <p>Anthropic "optimize for tokens." Anthropic <em>Code Execution with MCP</em> — token economy as the argument for code-execution architectures. LangChain context engineering (write/select/compress/isolate). Karpathy's "context window as RAM." Cognitive Dimensions Diffuseness/terseness.</p>
+        <h4>Distinct contribution</h4>
+        <p>The "taxation by API design" reframe. Existing token-economy guidance treats verbosity as inefficiency; v1 frames mandatory bloat as a usability tax — the surface forcing the agent to spend context on unwanted data, structurally analogous to a UI requiring you to read a paragraph to find a button.</p>
+        <h4>Empirical hooks</h4>
+        <ul>
+          <li>Tokens per successful call at fixed pass rate</li>
+          <li>Default-response size distribution per endpoint family</li>
+          <li>"Useful tokens" ratio: in a returned payload, what fraction was used by the agent in its next decision?</li>
+        </ul>
+      </div>
+      </details>
     </div>
 
     <div class="heuristic">
@@ -545,6 +786,20 @@
       <p class="h-rule">Authorization is granular and intelligible up front. The agent knows what it's allowed to do before it tries.</p>
       <p class="h-detail"><strong>Why for agents:</strong> A 403 mid-flow is a debugging nightmare for an agent. Agents need to know the boundaries of their authority at the start, in machine-readable form, and react to scope changes cleanly.</p>
       <p class="h-detail"><strong>Fails when:</strong> Scopes aren't visible to the agent. Scope names don't match capability names. Failure mode is generic 403 with no hint about which scope is missing.</p>
+      <details class="h-annotation"><summary>Prior art, distinct contribution, empirical hooks</summary>
+      <div class="h-annotation-content">
+        <h4>Prior art</h4>
+        <p>OAuth 2.0/2.1 scope design. OWASP LLM Top 10 (LLM06, LLM08). Willison's lethal trifecta — narrow scopes as structural mitigation. Anthropic <em>Building Effective Agents</em> implies scope visibility for agentic patterns.</p>
+        <h4>Distinct contribution</h4>
+        <p>Scope as a usability dimension, not just a security one. Existing OAuth/IAM design treats scopes as security primitives; v1 argues that machine-readable scope visibility (agent can query its own grants, not just discover them via 403s) is a usability precondition. Novel claim: a 403 mid-flow is a usability failure, not just an auth failure.</p>
+        <h4>Empirical hooks</h4>
+        <ul>
+          <li>Scope-mismatch error rate per task type (% of traces that hit 403 mid-flow)</li>
+          <li>Static: does the surface expose granted scopes to the authenticated agent in machine-readable form?</li>
+          <li>Scope-to-capability mapping coverage: are scope names self-describing relative to the capabilities they gate?</li>
+        </ul>
+      </div>
+      </details>
     </div>
 
     <div class="heuristic">
@@ -556,6 +811,20 @@
       <p class="h-rule">Names carry meaning. Similar things are named similarly. The lexicon agents see in tool/endpoint names matches the lexicon humans see in docs.</p>
       <p class="h-detail"><strong>Why for agents:</strong> Agents lean on names harder than humans do because they often pick a tool from a name alone. Naming is the first and most-used affordance. Empirically, tool names have stronger influence on agent selection than descriptions (ToolTweak, 2025).</p>
       <p class="h-detail"><strong>Fails when:</strong> The same concept has three names. Internal jargon leaks into public names.</p>
+      <details class="h-annotation"><summary>Prior art, distinct contribution, empirical hooks</summary>
+      <div class="h-annotation-content">
+        <h4>Prior art</h4>
+        <p>Bloch (2006) "Names matter." Cognitive Dimensions Role-expressiveness. ToolTweak (2025) — empirical proof that tool names dominate selection. "Learning to Rewrite Tool Descriptions" — description revision improves accuracy. Stylos &amp; Myers (2008) on method placement. Anthropic "namespace for clarity."</p>
+        <h4>Distinct contribution</h4>
+        <p>Two moves: (1) Tying naming explicitly to information architecture, not just per-tool naming — categorization across the surface affects agent groupings. (2) Empirical companion via the API IA Study (card-sort agreement between agent-derived and human-developer groupings). This heuristic has the strongest competitive moat for v1 — the combination of Bloch + ToolTweak + the in-flight IA study + HCI background is a position nobody else has assembled.</p>
+        <h4>Empirical hooks</h4>
+        <ul>
+          <li>ToolTweak resistance: replace tool names with generic identifiers, measure selection-accuracy delta</li>
+          <li>Tool-selection accuracy on MetaTool with a real tool taxonomy</li>
+          <li>Card-sort agreement between agent-derived groupings and human-developer groupings</li>
+        </ul>
+      </div>
+      </details>
     </div>
 
     <div class="heuristic">
@@ -567,6 +836,143 @@
       <p class="h-rule">Every action an agent takes is traceable, attributable, and visible to the customer in real time.</p>
       <p class="h-detail"><strong>Why for agents:</strong> Agents operate at scale. One mistake propagates fast. Customers and admins need to see what an agent did, when, and on whose authority, both for trust and for recovery.</p>
       <p class="h-detail"><strong>Fails when:</strong> Agent actions aren't distinguishable from user actions in audit logs. No per-agent attribution.</p>
+      <details class="h-annotation"><summary>Prior art, distinct contribution, empirical hooks</summary>
+      <div class="h-annotation-content">
+        <h4>Prior art</h4>
+        <p>OWASP LLM Top 10 (LLM08, LLM06). Willison's lethal trifecta — audit as structural mitigation. 12-Factor Agents "small focused agents" + "structured outputs." HAX Guidelines 13-15 (correction, scope agency, notify changes). CPTO vision: "trusted by default."</p>
+        <h4>Distinct contribution</h4>
+        <p>Audit and observability as usability dimensions for the customer/admin persona, not just operational concerns. Novel claim: a surface where actions aren't legible to the human-in-the-loop is unusable for trust even if every individual call succeeds. Hardest of the 10 to operationalize — trust and observability resist single-metric reduction.</p>
+        <h4>Empirical hooks</h4>
+        <ul>
+          <li>Per-agent attribution coverage in audit logs (% of actions that record agent identity distinctly from user identity)</li>
+          <li>Customer-facing agent activity feed coverage: % of agent actions visible to portal admins in real time</li>
+          <li>Time-to-detect for anomalous agent behavior (operational metric)</li>
+        </ul>
+      </div>
+      </details>
+    </div>
+  </section>
+
+  <section>
+    <h2>Candidate heuristics for v1</h2>
+    <p>Gaps identified in v0, annotated with prior art and provisional rules. These are under consideration, not yet adopted.</p>
+
+    <div class="candidate">
+      <div class="h-header">
+        <span class="h-number">H11</span>
+        <span class="h-title">Versioning legibility</span>
+        <span class="tag tag-candidate">Candidate</span>
+      </div>
+      <p class="h-rule">Surface versions and breaking changes are declared in machine-readable form. Agents can detect surface drift before it produces wrong behavior.</p>
+      <p class="h-detail"><strong>Why for agents:</strong> Humans pin versions and follow upgrade guides. Agents discover drift through failure. Versioning legibility requires the surface to declare its version and the agent to detect when its expectations no longer match.</p>
+      <p class="h-detail"><strong>Prior art:</strong> Semantic Versioning. StableToolBench (shape drift over time). Stripe date-pinned versioning (human-DX gold standard). Connects directly to the Release Management project's open question: "what counts as a breaking change for an agent?"</p>
+      <p class="h-detail"><strong>Empirical hooks:</strong> Breaking-change detection rate in agent traces under simulated drift. Static: does the surface expose version + change-history in machine-readable form?</p>
+    </div>
+
+    <div class="candidate">
+      <div class="h-header">
+        <span class="h-number">H12</span>
+        <span class="h-title">Documentation as agent-readable surface</span>
+        <span class="tag tag-candidate">Candidate</span>
+      </div>
+      <p class="h-rule">Documentation is structured, addressable, and consumable by agents at runtime — not just as a human reference.</p>
+      <p class="h-detail"><strong>Why for agents:</strong> H3 covers what the surface itself returns. H12 covers the broader documentation corpus as a separate addressable surface — examples, recipes, conceptual docs. The existence of <code>llms.txt</code> and MCP <code>prompts</code> resource type means docs-for-agents is a distinct design surface, not just human docs the agent reads.</p>
+      <p class="h-detail"><strong>Prior art:</strong> Robillard (2009) five factors of API docs. Anthropic "prompt-engineer descriptions." The <code>llms.txt</code> / <code>llms-full.txt</code> convention emerging in 2024-25. MCP prompts resource type.</p>
+      <p class="h-detail"><strong>Empirical hooks:</strong> Agent recovery improvement with indexed docs vs schema-only. Coverage: % of endpoints with worked examples in agent-readable form. Doc-call frequency in real agent traces.</p>
+    </div>
+
+    <div class="candidate">
+      <div class="h-header">
+        <span class="h-number">H13</span>
+        <span class="h-title">Trust boundaries are legible</span>
+        <span class="tag tag-candidate">Candidate</span>
+      </div>
+      <p class="h-rule">Trust boundaries — between user data, untrusted content, and external comms — are visible to the agent and the human in the loop.</p>
+      <p class="h-detail"><strong>Why for agents:</strong> H8 covers scoped authority. H10 covers post-hoc audit. H13 covers the design surface for boundary legibility: does the agent know when it's about to mix tainted content with sensitive data, and does the human in the loop see boundary crossings? Integrating trust as a usability dimension (not just security overlay) is a differentiator vs Anthropic and 12-Factor Agents.</p>
+      <p class="h-detail"><strong>Prior art:</strong> Willison's lethal trifecta. OWASP LLM Top 10. Log-To-Leak (OpenReview) on MCP prompt injection. Note: H8 + H13 overlap is a known tension — whether they merge or stay separate is a v1 decision.</p>
+      <p class="h-detail"><strong>Empirical hooks:</strong> Prompt-injection resistance under structured red-team scenarios. Static: does the surface tag "untrusted content" zones? Trifecta-detection coverage: can the agent identify trifecta-risky configurations?</p>
+    </div>
+
+    <div class="candidate">
+      <div class="h-header">
+        <span class="h-number">—</span>
+        <span class="h-title">Latency / throughput</span>
+        <span class="tag tag-deferred">Likely not v1</span>
+      </div>
+      <p class="h-rule">Performance as a usability dimension for agents.</p>
+      <p class="h-detail"><strong>Assessment:</strong> Likely not a standalone v1 heuristic. Performance is a quality concern that overlaps with existing API-quality guidance. Exception: "predictable latency" could be a sub-aspect of H2 (Predictable shapes) — agents pattern-match on latency too, and a surface that responds in 200ms usually and 30s sometimes confuses agent retry logic. Parked as a sub-aspect of H2.</p>
+    </div>
+
+    <div class="candidate">
+      <div class="h-header">
+        <span class="h-number">H14?</span>
+        <span class="h-title">Stateful interactions are explicit</span>
+        <span class="tag tag-candidate">Candidate</span>
+      </div>
+      <p class="h-rule">Any state held by the surface is declared, queryable, and resettable.</p>
+      <p class="h-detail"><strong>Why for agents:</strong> The current heuristics assume request/response. Surfaces with sessions, long-running tool calls, async work, or MCP sampling have different rules for H6 (idempotency on a session vs operation), H4 (errors mid-stream), and H7 (token cost over a session). Likely a v1 addition.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>What the annotation pass revealed</h2>
+    <p>Patterns from running every heuristic against the literature.</p>
+    <ul class="insight-list">
+      <li><strong>H1, H4, H6, H7, H9 have strong empirical hooks.</strong> These can be operationalized into a v2 scorecard relatively cleanly.</li>
+      <li><strong>H10 is the hardest to operationalize.</strong> Trust and observability resist single-metric reduction. The v2 scorecard will need to think about this carefully.</li>
+      <li><strong>H5 (Composability) is the most underspecified.</strong> "Without translation" is fuzzy. v1 should sharpen this — possibly into "the surface declares its composability properties in machine-readable form."</li>
+      <li><strong>H8 + H13 overlap.</strong> Whether they merge or stay separate is a v1 decision. Current preference: separate (H8 = "what am I allowed to do," H13 = "where are the boundaries between trust domains").</li>
+      <li><strong>H9 has the strongest competitive moat.</strong> The combination of Bloch + ToolTweak + the in-flight API IA Study + HCI background gives a defensible position on naming-as-IA that nobody else has assembled.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Open decisions</h2>
+    <p>Five structural questions that determine what v1 looks like. Tentative leanings noted, not decided.</p>
+
+    <div class="decision-card">
+      <h3>Q1. What shape is the v1 artifact?</h3>
+      <p>Three shapes from prior art, each with different credibility ceilings and authoring costs.</p>
+      <ul class="options">
+        <li>Flat heuristics list (Nielsen 1994 shape) — shippable in weeks, low ceremony</li>
+        <li class="leaning">Heuristics + dimensions (Nielsen + Cognitive Dimensions hybrid) — adds academic depth without full HAX ceremony</li>
+        <li>Full pipeline: heuristics + workbook + playbook + patterns (HAX shape) — highest credibility, months of work</li>
+      </ul>
+    </div>
+
+    <div class="decision-card">
+      <h3>Q2. One rubric or two?</h3>
+      <p>How this composes with the existing human DX quality rubric.</p>
+      <ul class="options">
+        <li class="leaning">Two composable rubrics — human DX + agent DX score on separate axes, overlap where they overlap</li>
+        <li>One unified rubric with persona dimension — each heuristic has "for agent" and "for human" rows</li>
+      </ul>
+    </div>
+
+    <div class="decision-card">
+      <h3>Q3. Audience?</h3>
+      <ul class="options">
+        <li>Internal first — API designers, platform PMs, API Council</li>
+        <li>External first — vendor-neutral, academically citable</li>
+        <li class="leaning">Both, sequenced — internal first for credibility-via-use, external second once pressure-tested</li>
+      </ul>
+    </div>
+
+    <div class="decision-card">
+      <h3>Q4. Adopt "ACI" or coin a new term?</h3>
+      <ul class="options">
+        <li class="leaning">Adopt SWE-agent's "Agent-Computer Interface" — inherit recognizability, position as "heuristics for designing a good ACI"</li>
+        <li>Extend with a platform-specific term ("Agent-Platform Interface," "Agent Surface")</li>
+        <li>Coin something new — differentiation but starts naming fight from zero</li>
+      </ul>
+    </div>
+
+    <div class="decision-card">
+      <h3>Q5. Derivation method?</h3>
+      <ul class="options">
+        <li class="leaning">Opinion + worked examples for v1 — fast, honest framing ("opinion-plus-literature"), with roadmap to factor analysis for v2</li>
+        <li>Nielsen-style factor analysis (250+ agent failures, coded, factor-analyzed) — high credibility, slow, requires data collection</li>
+      </ul>
     </div>
   </section>
 
