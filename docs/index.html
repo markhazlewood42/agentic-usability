@@ -464,6 +464,17 @@
       padding: 2px 0;
     }
 
+    .h-annotation-content a,
+    .h-detail a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .h-annotation-content a:hover,
+    .h-detail a:hover {
+      text-decoration: underline;
+    }
+
     .candidate {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -614,13 +625,13 @@
       <details class="h-annotation"><summary>Prior art, distinct contribution, empirical hooks</summary>
       <div class="h-annotation-content">
         <h4>Prior art</h4>
-        <p>Nielsen H1 (visibility of system status) and H6 (recognition over recall). Stylos &amp; Myers (2008) on method placement affecting discoverability. Anthropic "choose tools thoughtfully." MetaTool operationalizes tool selection as measurable behavior.</p>
+        <p><a href="#ref-nielsen">Nielsen</a> H1 (visibility of system status) and H6 (recognition over recall). <a href="https://dl.acm.org/doi/10.1145/1453101.1453129">Stylos &amp; Myers (2008)</a> on method placement affecting discoverability. <a href="#ref-anthropic-tools">Anthropic "choose tools thoughtfully."</a> <a href="https://arxiv.org/abs/2310.03128">MetaTool</a> operationalizes tool selection as measurable behavior.</p>
         <h4>Distinct contribution</h4>
         <p>The retry-cost asymmetry: humans recover from wrong choices visually (cheap), agents recover by retrying (expensive in tokens and dangerous in side effects). This makes discoverability more load-bearing for agents, not just differently load-bearing. Existing API-usability work doesn't reckon with this because human retry is essentially free.</p>
         <h4>Empirical hooks</h4>
         <ul>
-          <li>MetaTool "whether-and-which tool" accuracy on a real tool catalog</li>
-          <li>&tau;-bench pass^k reliability — discoverability problems show up as pass-rate drop from pass^1 to pass^8</li>
+          <li><a href="https://arxiv.org/abs/2310.03128">MetaTool</a> "whether-and-which tool" accuracy on a real tool catalog</li>
+          <li><a href="#ref-tau-bench">&tau;-bench</a> pass^k reliability — discoverability problems show up as pass-rate drop from pass^1 to pass^8</li>
           <li>Synthetic agent runs: given N realistic intents, what % land on the canonical tool first try?</li>
         </ul>
       </div>
@@ -639,12 +650,12 @@
       <details class="h-annotation"><summary>Prior art, distinct contribution, empirical hooks</summary>
       <div class="h-annotation-content">
         <h4>Prior art</h4>
-        <p>Bloch (2006) "Names matter" + "minimize mutability." Cognitive Dimensions: Consistency and Role-expressiveness. BFCL operationalizes syntactically/semantically valid calls. StableToolBench studies shape drift over time.</p>
+        <p><a href="#ref-bloch">Bloch (2006)</a> "Names matter" + "minimize mutability." <a href="https://en.wikipedia.org/wiki/Cognitive_dimensions_of_notations">Cognitive Dimensions</a>: Consistency and Role-expressiveness. <a href="https://gorilla.cs.berkeley.edu/leaderboard.html">BFCL</a> operationalizes syntactically/semantically valid calls. <a href="https://arxiv.org/abs/2403.07714">StableToolBench</a> studies shape drift over time.</p>
         <h4>Distinct contribution</h4>
         <p>Cross-endpoint shape consistency as a distinct usability dimension. Most prior work measures shape correctness per call. v1 names cross-call consistency because agents pattern-match across calls in a session — a <code>contact</code> that looks different in a list response vs a get-by-id response is a hallucination magnet.</p>
         <h4>Empirical hooks</h4>
         <ul>
-          <li>BFCL AST-correctness on a domain-specific subset</li>
+          <li><a href="https://gorilla.cs.berkeley.edu/leaderboard.html">BFCL</a> AST-correctness on a domain-specific subset</li>
           <li>Schema-similarity score across endpoints returning the same conceptual type</li>
           <li>Agent confusion rate after a shape change in a synthetic eval</li>
         </ul>
@@ -664,14 +675,14 @@
       <details class="h-annotation"><summary>Prior art, distinct contribution, empirical hooks</summary>
       <div class="h-annotation-content">
         <h4>Prior art</h4>
-        <p>Robillard (2009) five factors of API documentation (intent, examples, scenario-matching, penetrability, format). Anthropic "return meaningful context" + "prompt-engineer descriptions." MCP capability negotiation. Bloch's "every API is a little language."</p>
+        <p><a href="https://ieeexplore.ieee.org/document/5287006">Robillard (2009)</a> five factors of API documentation (intent, examples, scenario-matching, penetrability, format). <a href="#ref-anthropic-tools">Anthropic</a> "return meaningful context" + "prompt-engineer descriptions." <a href="https://modelcontextprotocol.io/specification">MCP</a> capability negotiation. <a href="#ref-bloch">Bloch's</a> "every API is a little language."</p>
         <h4>Distinct contribution</h4>
         <p>The schema-as-prompt insight: for agents, there is no separation between "API contract" and "instructions to the model." Schema text is consumed as natural language. Documentation-as-afterthought is a design failure for agents in a way it isn't for humans, who can fall back on tutorials or asking a teammate.</p>
         <h4>Empirical hooks</h4>
         <ul>
-          <li>Token-efficiency at fixed pass rate on &tau;-bench (more self-describing surfaces should reach the same pass rate with fewer tokens)</li>
+          <li>Token-efficiency at fixed pass rate on <a href="#ref-tau-bench">&tau;-bench</a> (more self-describing surfaces should reach the same pass rate with fewer tokens)</li>
           <li>Agent recovery rate when passed schema-only vs schema-plus-docs</li>
-          <li>Description-quality eval per "Learning to Rewrite Tool Descriptions" methodology</li>
+          <li>Description-quality eval per <a href="https://arxiv.org/abs/2602.20426">"Learning to Rewrite Tool Descriptions"</a> methodology</li>
         </ul>
       </div>
       </details>
@@ -689,7 +700,7 @@
       <details class="h-annotation"><summary>Prior art, distinct contribution, empirical hooks</summary>
       <div class="h-annotation-content">
         <h4>Prior art</h4>
-        <p>Nielsen H9 (help users recognize, diagnose, recover from errors). Anthropic guidance on error responses as agent recovery surfaces. 12-Factor Agents "errors as tokens." Robillard (2009) error documentation as API learnability factor.</p>
+        <p><a href="#ref-nielsen">Nielsen</a> H9 (help users recognize, diagnose, recover from errors). <a href="#ref-anthropic-tools">Anthropic</a> guidance on error responses as agent recovery surfaces. <a href="#ref-12-factor">12-Factor Agents</a> "errors as tokens." <a href="https://ieeexplore.ieee.org/document/5287006">Robillard (2009)</a> error documentation as API learnability factor.</p>
         <h4>Distinct contribution</h4>
         <p>The "error as second-chance prompt" reframe. Errors aren't just observability — they're another input to the agent's next decision. Existing error-design work treats error messages as user feedback; v1 treats them as part of the prompt the agent reads on the next turn. Shifts what counts as a good error: not "what went wrong," but "what would help the agent succeed on retry."</p>
         <h4>Empirical hooks</h4>
@@ -714,12 +725,12 @@
       <details class="h-annotation"><summary>Prior art, distinct contribution, empirical hooks</summary>
       <div class="h-annotation-content">
         <h4>Prior art</h4>
-        <p>Bloch (2006) on small surfaces that compose. Cognitive Dimensions: Hidden dependencies and Viscosity. 12-Factor Agents "structured outputs." Anthropic <em>Code Execution with MCP</em> — the argument that agents writing code over tool outputs is more efficient than chaining direct calls.</p>
+        <p><a href="#ref-bloch">Bloch (2006)</a> on small surfaces that compose. <a href="https://en.wikipedia.org/wiki/Cognitive_dimensions_of_notations">Cognitive Dimensions</a>: Hidden dependencies and Viscosity. <a href="#ref-12-factor">12-Factor Agents</a> "structured outputs." <a href="#ref-anthropic-mcp">Anthropic <em>Code Execution with MCP</em></a> — the argument that agents writing code over tool outputs is more efficient than chaining direct calls.</p>
         <h4>Distinct contribution</h4>
         <p>Cross-surface composability as a usability dimension. v1's territory is API + CLI + MCP, and composability across surfaces (CLI output flows into API input flows into MCP tool call) is a property of coherent platform design. No existing framework names cross-surface composability as a specific heuristic. Note: "without translation" is the most underspecified part of v0 — v1 should sharpen this.</p>
         <h4>Empirical hooks</h4>
         <ul>
-          <li>Multi-step task success on &tau;&sup2;-bench / MCP-Bench</li>
+          <li>Multi-step task success on <a href="#ref-tau-bench">&tau;&sup2;-bench</a> / <a href="https://arxiv.org/abs/2508.20453">MCP-Bench</a></li>
           <li>"Translation overhead": count places in agent traces where the agent reshapes data between calls</li>
           <li>Static analysis: what fraction of "outputs of X" are valid "inputs to Y" without translation?</li>
         </ul>
@@ -739,7 +750,7 @@
       <details class="h-annotation"><summary>Prior art, distinct contribution, empirical hooks</summary>
       <div class="h-annotation-content">
         <h4>Prior art</h4>
-        <p>Cognitive Dimensions Viscosity (cost to recover from a wrong move). HTTP method semantics (RFC 9110). Stripe API design retrospective on idempotency keys as first-class affordance. 12-Factor Agents assumes retry-safe operations.</p>
+        <p><a href="https://en.wikipedia.org/wiki/Cognitive_dimensions_of_notations">Cognitive Dimensions</a> Viscosity (cost to recover from a wrong move). <a href="https://www.rfc-editor.org/rfc/rfc9110#section-9.2.2">HTTP method semantics (RFC 9110)</a>. <a href="https://stripe.dev/blog/payment-api-design">Stripe API design retrospective</a> on idempotency keys as first-class affordance. <a href="#ref-12-factor">12-Factor Agents</a> assumes retry-safe operations.</p>
         <h4>Distinct contribution</h4>
         <p>The agent-retry argument: agents retry much more than humans, and their reasoning is itself non-deterministic. Combining stochastic retry with non-idempotent operations compounds rather than cancels uncertainty. Existing API design treats idempotency as developer convenience; v1 frames it as a usability necessity. Novel claim: idempotency declaration belongs in the schema (machine-readable), not just the docs.</p>
         <h4>Empirical hooks</h4>
@@ -764,12 +775,12 @@
       <details class="h-annotation"><summary>Prior art, distinct contribution, empirical hooks</summary>
       <div class="h-annotation-content">
         <h4>Prior art</h4>
-        <p>Anthropic "optimize for tokens." Anthropic <em>Code Execution with MCP</em> — token economy as the argument for code-execution architectures. LangChain context engineering (write/select/compress/isolate). Karpathy's "context window as RAM." Cognitive Dimensions Diffuseness/terseness.</p>
+        <p><a href="#ref-anthropic-tools">Anthropic</a> "optimize for tokens." <a href="#ref-anthropic-mcp">Anthropic <em>Code Execution with MCP</em></a> — token economy as the argument for code-execution architectures. <a href="https://blog.langchain.com/context-engineering-for-agents/">LangChain context engineering</a> (write/select/compress/isolate). Karpathy's "context window as RAM." <a href="https://en.wikipedia.org/wiki/Cognitive_dimensions_of_notations">Cognitive Dimensions</a> Diffuseness/terseness.</p>
         <h4>Distinct contribution</h4>
         <p>The "taxation by API design" reframe. Existing token-economy guidance treats verbosity as inefficiency; v1 frames mandatory bloat as a usability tax — the surface forcing the agent to spend context on unwanted data, structurally analogous to a UI requiring you to read a paragraph to find a button.</p>
         <h4>Empirical hooks</h4>
         <ul>
-          <li>Tokens per successful call at fixed pass rate</li>
+          <li>Tokens per successful call at fixed pass rate (<a href="https://gorilla.cs.berkeley.edu/leaderboard.html">BFCL</a> token-efficiency variants)</li>
           <li>Default-response size distribution per endpoint family</li>
           <li>"Useful tokens" ratio: in a returned payload, what fraction was used by the agent in its next decision?</li>
         </ul>
@@ -789,7 +800,7 @@
       <details class="h-annotation"><summary>Prior art, distinct contribution, empirical hooks</summary>
       <div class="h-annotation-content">
         <h4>Prior art</h4>
-        <p>OAuth 2.0/2.1 scope design. OWASP LLM Top 10 (LLM06, LLM08). Willison's lethal trifecta — narrow scopes as structural mitigation. Anthropic <em>Building Effective Agents</em> implies scope visibility for agentic patterns.</p>
+        <p><a href="https://www.rfc-editor.org/rfc/rfc6749">OAuth 2.0</a> scope design. <a href="https://genai.owasp.org/llmrisk/llm01-prompt-injection/">OWASP LLM Top 10</a> (LLM06, LLM08). <a href="#ref-lethal-trifecta">Willison's lethal trifecta</a> — narrow scopes as structural mitigation. <a href="https://www.anthropic.com/research/building-effective-agents">Anthropic <em>Building Effective Agents</em></a> implies scope visibility for agentic patterns.</p>
         <h4>Distinct contribution</h4>
         <p>Scope as a usability dimension, not just a security one. Existing OAuth/IAM design treats scopes as security primitives; v1 argues that machine-readable scope visibility (agent can query its own grants, not just discover them via 403s) is a usability precondition. Novel claim: a 403 mid-flow is a usability failure, not just an auth failure.</p>
         <h4>Empirical hooks</h4>
@@ -814,13 +825,13 @@
       <details class="h-annotation"><summary>Prior art, distinct contribution, empirical hooks</summary>
       <div class="h-annotation-content">
         <h4>Prior art</h4>
-        <p>Bloch (2006) "Names matter." Cognitive Dimensions Role-expressiveness. ToolTweak (2025) — empirical proof that tool names dominate selection. "Learning to Rewrite Tool Descriptions" — description revision improves accuracy. Stylos &amp; Myers (2008) on method placement. Anthropic "namespace for clarity."</p>
+        <p><a href="#ref-bloch">Bloch (2006)</a> "Names matter." <a href="https://en.wikipedia.org/wiki/Cognitive_dimensions_of_notations">Cognitive Dimensions</a> Role-expressiveness. <a href="https://arxiv.org/abs/2510.02554">ToolTweak (2025)</a> — empirical proof that tool names dominate selection. <a href="https://arxiv.org/abs/2602.20426">"Learning to Rewrite Tool Descriptions"</a> — description revision improves accuracy. <a href="https://dl.acm.org/doi/10.1145/1453101.1453129">Stylos &amp; Myers (2008)</a> on method placement. <a href="#ref-anthropic-tools">Anthropic</a> "namespace for clarity."</p>
         <h4>Distinct contribution</h4>
         <p>Two moves: (1) Tying naming explicitly to information architecture, not just per-tool naming — categorization across the surface affects agent groupings. (2) Empirical companion via the API IA Study (card-sort agreement between agent-derived and human-developer groupings). This heuristic has the strongest competitive moat for v1 — the combination of Bloch + ToolTweak + the in-flight IA study + HCI background is a position nobody else has assembled.</p>
         <h4>Empirical hooks</h4>
         <ul>
-          <li>ToolTweak resistance: replace tool names with generic identifiers, measure selection-accuracy delta</li>
-          <li>Tool-selection accuracy on MetaTool with a real tool taxonomy</li>
+          <li><a href="https://arxiv.org/abs/2510.02554">ToolTweak</a> resistance: replace tool names with generic identifiers, measure selection-accuracy delta</li>
+          <li>Tool-selection accuracy on <a href="https://arxiv.org/abs/2310.03128">MetaTool</a> with a real tool taxonomy</li>
           <li>Card-sort agreement between agent-derived groupings and human-developer groupings</li>
         </ul>
       </div>
@@ -839,7 +850,7 @@
       <details class="h-annotation"><summary>Prior art, distinct contribution, empirical hooks</summary>
       <div class="h-annotation-content">
         <h4>Prior art</h4>
-        <p>OWASP LLM Top 10 (LLM08, LLM06). Willison's lethal trifecta — audit as structural mitigation. 12-Factor Agents "small focused agents" + "structured outputs." HAX Guidelines 13-15 (correction, scope agency, notify changes). CPTO vision: "trusted by default."</p>
+        <p><a href="https://genai.owasp.org/llmrisk/llm01-prompt-injection/">OWASP LLM Top 10</a> (LLM08, LLM06). <a href="#ref-lethal-trifecta">Willison's lethal trifecta</a> — audit as structural mitigation. <a href="#ref-12-factor">12-Factor Agents</a> "small focused agents" + "structured outputs." <a href="https://www.microsoft.com/en-us/haxtoolkit/">HAX</a> Guidelines 13-15 (correction, scope agency, notify changes). CPTO vision: "trusted by default."</p>
         <h4>Distinct contribution</h4>
         <p>Audit and observability as usability dimensions for the customer/admin persona, not just operational concerns. Novel claim: a surface where actions aren't legible to the human-in-the-loop is unusable for trust even if every individual call succeeds. Hardest of the 10 to operationalize — trust and observability resist single-metric reduction.</p>
         <h4>Empirical hooks</h4>
@@ -865,7 +876,7 @@
       </div>
       <p class="h-rule">Surface versions and breaking changes are declared in machine-readable form. Agents can detect surface drift before it produces wrong behavior.</p>
       <p class="h-detail"><strong>Why for agents:</strong> Humans pin versions and follow upgrade guides. Agents discover drift through failure. Versioning legibility requires the surface to declare its version and the agent to detect when its expectations no longer match.</p>
-      <p class="h-detail"><strong>Prior art:</strong> Semantic Versioning. StableToolBench (shape drift over time). Stripe date-pinned versioning (human-DX gold standard). Connects directly to the Release Management project's open question: "what counts as a breaking change for an agent?"</p>
+      <p class="h-detail"><strong>Prior art:</strong> <a href="https://semver.org/">Semantic Versioning</a>. <a href="https://arxiv.org/abs/2403.07714">StableToolBench</a> (shape drift over time). <a href="https://stripe.dev/blog/payment-api-design">Stripe date-pinned versioning</a> (human-DX gold standard). Connects directly to the Release Management project's open question: "what counts as a breaking change for an agent?"</p>
       <p class="h-detail"><strong>Empirical hooks:</strong> Breaking-change detection rate in agent traces under simulated drift. Static: does the surface expose version + change-history in machine-readable form?</p>
     </div>
 
@@ -877,7 +888,7 @@
       </div>
       <p class="h-rule">Documentation is structured, addressable, and consumable by agents at runtime — not just as a human reference.</p>
       <p class="h-detail"><strong>Why for agents:</strong> H3 covers what the surface itself returns. H12 covers the broader documentation corpus as a separate addressable surface — examples, recipes, conceptual docs. The existence of <code>llms.txt</code> and MCP <code>prompts</code> resource type means docs-for-agents is a distinct design surface, not just human docs the agent reads.</p>
-      <p class="h-detail"><strong>Prior art:</strong> Robillard (2009) five factors of API docs. Anthropic "prompt-engineer descriptions." The <code>llms.txt</code> / <code>llms-full.txt</code> convention emerging in 2024-25. MCP prompts resource type.</p>
+      <p class="h-detail"><strong>Prior art:</strong> <a href="https://ieeexplore.ieee.org/document/5287006">Robillard (2009)</a> five factors of API docs. <a href="#ref-anthropic-tools">Anthropic</a> "prompt-engineer descriptions." The <a href="https://llmstxt.org/"><code>llms.txt</code></a> convention emerging in 2024-25. <a href="https://modelcontextprotocol.io/specification">MCP</a> prompts resource type.</p>
       <p class="h-detail"><strong>Empirical hooks:</strong> Agent recovery improvement with indexed docs vs schema-only. Coverage: % of endpoints with worked examples in agent-readable form. Doc-call frequency in real agent traces.</p>
     </div>
 
@@ -889,7 +900,7 @@
       </div>
       <p class="h-rule">Trust boundaries — between user data, untrusted content, and external comms — are visible to the agent and the human in the loop.</p>
       <p class="h-detail"><strong>Why for agents:</strong> H8 covers scoped authority. H10 covers post-hoc audit. H13 covers the design surface for boundary legibility: does the agent know when it's about to mix tainted content with sensitive data, and does the human in the loop see boundary crossings? Integrating trust as a usability dimension (not just security overlay) is a differentiator vs Anthropic and 12-Factor Agents.</p>
-      <p class="h-detail"><strong>Prior art:</strong> Willison's lethal trifecta. OWASP LLM Top 10. Log-To-Leak (OpenReview) on MCP prompt injection. Note: H8 + H13 overlap is a known tension — whether they merge or stay separate is a v1 decision.</p>
+      <p class="h-detail"><strong>Prior art:</strong> <a href="#ref-lethal-trifecta">Willison's lethal trifecta</a>. <a href="https://genai.owasp.org/llmrisk/llm01-prompt-injection/">OWASP LLM Top 10</a>. <a href="https://openreview.net/forum?id=5PZxqjaAI5">Log-To-Leak</a> (OpenReview) on MCP prompt injection. Note: H8 + H13 overlap is a known tension — whether they merge or stay separate is a v1 decision.</p>
       <p class="h-detail"><strong>Empirical hooks:</strong> Prompt-injection resistance under structured red-team scenarios. Static: does the surface tag "untrusted content" zones? Trifecta-detection coverage: can the agent identify trifecta-risky configurations?</p>
     </div>
 
@@ -1095,51 +1106,52 @@
     <h2>Top references</h2>
     <p>The 10 most important sources, in reading order. Full annotated bibliography in the <a href="https://github.com/markhazlewood42/agentic-usability">repo</a>.</p>
     <ol class="ref-list">
-      <li>
+      <li id="ref-swe-agent">
         <span class="ref-title">Yang et al. (2024). SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering.</span>
         <span class="ref-note"> NeurIPS 2024. Coins "ACI" and shows interface design alone lifts task success.</span>
         <a href="https://arxiv.org/abs/2405.15793">arXiv</a>
       </li>
-      <li>
+      <li id="ref-anthropic-tools">
         <span class="ref-title">Anthropic. Writing Effective Tools for AI Agents.</span>
         <span class="ref-note"> Eight principles for tool design. The most direct competing artifact.</span>
         <a href="https://www.anthropic.com/engineering/writing-tools-for-agents">Link</a>
       </li>
-      <li>
+      <li id="ref-tau-bench">
         <span class="ref-title">Yao et al. (2024). &tau;-bench: Benchmarking Tool-Agent-User Interaction.</span>
         <span class="ref-note"> Introduces pass^k. Frontier agents succeed &lt;50% consistently.</span>
         <a href="https://arxiv.org/abs/2406.12045">arXiv</a>
       </li>
-      <li>
+      <li id="ref-nielsen">
         <span class="ref-title">Nielsen, J. (1994). Enhancing the Explanatory Power of Usability Heuristics.</span>
         <span class="ref-note"> The derivation method (factor analysis of 249 problems) is the credibility template.</span>
+        <a href="https://www.nngroup.com/articles/ten-usability-heuristics/">NN/g</a>
       </li>
-      <li>
+      <li id="ref-clarke">
         <span class="ref-title">Clarke, S. (2004). Describing and Measuring API Usability with Cognitive Dimensions.</span>
         <span class="ref-note"> The human-API precursor. Persona-driven API usability studies at Microsoft Research.</span>
         <a href="https://www.cl.cam.ac.uk/~afb21/CognitiveDimensions/workshop2005/Clarke_position_paper.pdf">PDF</a>
       </li>
-      <li>
+      <li id="ref-bloch">
         <span class="ref-title">Bloch, J. (2006). How to Design a Good API and Why It Matters.</span>
         <span class="ref-note"> "Every API is a little language." Agents read that language as a prompt.</span>
         <a href="https://research.google/pubs/how-to-design-a-good-api-and-why-it-matters/">Link</a>
       </li>
-      <li>
+      <li id="ref-anthropic-mcp">
         <span class="ref-title">Anthropic. Code Execution with MCP: Building More Efficient AI Agents.</span>
         <span class="ref-note"> Agent usability as a system architecture choice, not just tool design.</span>
         <a href="https://www.anthropic.com/engineering/code-execution-with-mcp">Link</a>
       </li>
-      <li>
+      <li id="ref-12-factor">
         <span class="ref-title">Horthy, D. 12-Factor Agents.</span>
         <span class="ref-note"> Application-level reliability principles. This framework is one layer below.</span>
         <a href="https://github.com/humanlayer/12-factor-agents">GitHub</a>
       </li>
-      <li>
+      <li id="ref-mcp-universe">
         <span class="ref-title">Luo et al. (2025). MCP-Universe: Benchmarking LLMs with Real-World MCP Servers.</span>
         <span class="ref-note"> Frontier models score 33-44% on MCP tasks.</span>
         <a href="https://arxiv.org/abs/2508.14704">arXiv</a>
       </li>
-      <li>
+      <li id="ref-lethal-trifecta">
         <span class="ref-title">Willison, S. The Lethal Trifecta for AI Agents.</span>
         <span class="ref-note"> Private data + untrusted content + external comms = structural exfiltration risk.</span>
         <a href="https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/">Link</a>
