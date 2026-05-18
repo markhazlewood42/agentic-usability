@@ -1,5 +1,5 @@
 # Agentic Usability — Project Status
-_Last updated: 2026-05-07 (Eco All-Hands surfaced multiple parallel workstreams — Ed Langan's Epic Week talk, Rachel Kellam's agent API evaluations, Roger Brown's synthetic agent testing, Matt Rollender's Breeze Apps debugging agent; contacts and references captured in knowledge/eco-allhands-2026-05-07.md and todo.md)_
+_Last updated: 2026-05-18 (Repo made public, GitHub Pages insights readout live at https://markhazlewood42.github.io/agentic-usability/; docs/index.html must stay in sync with source files when heuristics, citations, status, or collaborators change)_
 
 ---
 
@@ -78,6 +78,14 @@ Working draft, intentionally unfinished. See `heuristics-v0.md`.
 - How do we test these empirically? Synthetic agent runs? Telemetry from real MCP traffic? Both?
 - Who's the audience — internal API designers, external developers, both? Different framings.
 
+## GitHub Pages
+
+**URL:** https://markhazlewood42.github.io/agentic-usability/
+**Source:** `docs/index.html` on `main` branch
+**Repo:** https://github.com/markhazlewood42/agentic-usability (public)
+
+The insights page is the shareable artifact. It must stay in sync with source files (heuristics, citations, collaborators, roadmap) whenever those change.
+
 ## Linear
 
 No Linear project yet. This is currently Mark's personal IP/research project. May graduate to a real-projects entry once it has a stakeholder beyond Mark, or stay personal indefinitely depending on how it evolves.
@@ -98,6 +106,7 @@ None mapped (personal project, no team channel). If/when this becomes a shared w
 | `knowledge/concepts-glossary.md` | Load-bearing vocabulary v1 must speak |
 | `knowledge/eco-allhands-2026-05-07.md` | Contacts, parallel workstreams, and design tensions from Eco All-Hands chat thread |
 | `decisions/2026-05-shape-and-positioning.md` | Open Phase-1 decision doc on artifact shape, audience, term, derivation method |
+| `docs/index.html` | GitHub Pages insights readout (shareable overview, must stay in sync with source files) |
 | `status.md` | This file |
 
 **Deferred for a follow-up session:** Track 4 skill scaffolding (`/lit-review` and `/heuristic-eval`). Workspace `skills/` directory is currently in an unexpected modified state (every skill file has been emptied locally vs git HEAD); not safe to add new skill files into that state without first resolving what's going on with the existing ones.

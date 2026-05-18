@@ -466,7 +466,8 @@
         <span class="tag tag-reason">Reason-about</span>
       </div>
       <p class="h-rule">The agent can find the right capability from a description of intent, not by trying things until something works.</p>
-      <p class="h-detail"><strong>Why for agents:</strong> Humans skim and recover from wrong choices visually. Agents recover by retrying, which is expensive in tokens and dangerous in side effects. <strong>Fails when:</strong> Two endpoints with overlapping responsibilities, no clear signal which is canonical. Names don't match the agent's natural framing of intent.</p>
+      <p class="h-detail"><strong>Why for agents:</strong> Humans skim and recover from wrong choices visually. Agents recover by retrying, which is expensive in tokens and dangerous in side effects.</p>
+      <p class="h-detail"><strong>Fails when:</strong> Two endpoints with overlapping responsibilities, no clear signal which is canonical. Names don't match the agent's natural framing of intent.</p>
     </div>
 
     <div class="heuristic">
@@ -476,7 +477,8 @@
         <span class="tag tag-reason">Reason-about</span>
       </div>
       <p class="h-rule">Inputs and outputs are typed, deterministic, and consistent. The same concept has the same shape across the surface.</p>
-      <p class="h-detail"><strong>Why for agents:</strong> Agents pattern-match on shapes more than humans do. A <code>contact</code> that looks one way in one endpoint and another way three calls later is a hallucination magnet. <strong>Fails when:</strong> Pagination differs between resources. Date formats vary. ID fields named inconsistently.</p>
+      <p class="h-detail"><strong>Why for agents:</strong> Agents pattern-match on shapes more than humans do. A <code>contact</code> that looks one way in one endpoint and another way three calls later is a hallucination magnet.</p>
+      <p class="h-detail"><strong>Fails when:</strong> Pagination differs between resources. Date formats vary. ID fields named inconsistently.</p>
     </div>
 
     <div class="heuristic">
@@ -486,7 +488,8 @@
         <span class="tag tag-reason">Reason-about</span>
       </div>
       <p class="h-rule">Every endpoint, tool, or command returns enough metadata to be understood without out-of-band documentation.</p>
-      <p class="h-detail"><strong>Why for agents:</strong> Agents have no prior context unless it was injected into the prompt. A self-describing surface lowers the cost of cold-start use. Schemas, examples, annotations, and inline help are first-class. <strong>Fails when:</strong> OpenAPI spec exists but isn't loadable by the agent. MCP tool descriptions are one-liners.</p>
+      <p class="h-detail"><strong>Why for agents:</strong> Agents have no prior context unless it was injected into the prompt. A self-describing surface lowers the cost of cold-start use. Schemas, examples, annotations, and inline help are first-class.</p>
+      <p class="h-detail"><strong>Fails when:</strong> OpenAPI spec exists but isn't loadable by the agent. MCP tool descriptions are one-liners.</p>
     </div>
 
     <div class="heuristic">
@@ -496,7 +499,8 @@
         <span class="tag tag-use">Use-effectively</span>
       </div>
       <p class="h-rule">Errors are typed, coded, and include structured recovery information. Prose alone fails.</p>
-      <p class="h-detail"><strong>Why for agents:</strong> Humans read "Sorry, that didn't work" and infer intent. Agents read it literally and either retry blindly or hallucinate a fix. An error is a second-chance prompt: a structured error that names the problem, lists valid options, and points to relevant docs enables near-100% recovery. <strong>Fails when:</strong> All errors are 500s with a string body. Validation errors don't identify the offending field.</p>
+      <p class="h-detail"><strong>Why for agents:</strong> Humans read "Sorry, that didn't work" and infer intent. Agents read it literally and either retry blindly or hallucinate a fix. An error is a second-chance prompt: a structured error that names the problem, lists valid options, and points to relevant docs enables near-100% recovery.</p>
+      <p class="h-detail"><strong>Fails when:</strong> All errors are 500s with a string body. Validation errors don't identify the offending field.</p>
     </div>
 
     <div class="heuristic">
@@ -506,7 +510,8 @@
         <span class="tag tag-use">Use-effectively</span>
       </div>
       <p class="h-rule">Outputs of one operation match inputs of related operations without translation.</p>
-      <p class="h-detail"><strong>Why for agents:</strong> Multi-step agent workflows chain calls. Every translation step (IDs, formats, references) is a place to fail. A composable surface lets the agent move data between calls without reshaping. <strong>Fails when:</strong> "List" returns IDs in one shape, "Get" wants a different shape. Reference fields aren't directly callable.</p>
+      <p class="h-detail"><strong>Why for agents:</strong> Multi-step agent workflows chain calls. Every translation step (IDs, formats, references) is a place to fail. A composable surface lets the agent move data between calls without reshaping.</p>
+      <p class="h-detail"><strong>Fails when:</strong> "List" returns IDs in one shape, "Get" wants a different shape. Reference fields aren't directly callable.</p>
     </div>
 
     <div class="heuristic">
@@ -516,7 +521,8 @@
         <span class="tag tag-use">Use-effectively</span>
       </div>
       <p class="h-rule">Operations declare their idempotency. Agents can retry on failure without guessing at side effects.</p>
-      <p class="h-detail"><strong>Why for agents:</strong> Agents retry. A lot. If the platform doesn't tell the agent which operations are safe to retry, the agent will either over-retry (duplicates) or under-retry (give up too easily). <strong>Fails when:</strong> No idempotency keys on writes. POST that's actually upsert, not documented as such.</p>
+      <p class="h-detail"><strong>Why for agents:</strong> Agents retry. A lot. If the platform doesn't tell the agent which operations are safe to retry, the agent will either over-retry (duplicates) or under-retry (give up too easily).</p>
+      <p class="h-detail"><strong>Fails when:</strong> No idempotency keys on writes. POST that's actually upsert, not documented as such.</p>
     </div>
 
     <div class="heuristic">
@@ -526,7 +532,8 @@
         <span class="tag tag-use">Use-effectively</span>
       </div>
       <p class="h-rule">Responses are lean by default and expandable on request. No mandatory bloat.</p>
-      <p class="h-detail"><strong>Why for agents:</strong> Every byte of response goes into a context window the agent has to pay for. A 50-field object when the agent needed two fields is taxation by API design. <strong>Fails when:</strong> No field selection. Default response includes deeply nested associations. Pagination defaults to absurdly large pages.</p>
+      <p class="h-detail"><strong>Why for agents:</strong> Every byte of response goes into a context window the agent has to pay for. A 50-field object when the agent needed two fields is taxation by API design.</p>
+      <p class="h-detail"><strong>Fails when:</strong> No field selection. Default response includes deeply nested associations. Pagination defaults to absurdly large pages.</p>
     </div>
 
     <div class="heuristic">
@@ -536,7 +543,8 @@
         <span class="tag tag-use">Use-effectively</span>
       </div>
       <p class="h-rule">Authorization is granular and intelligible up front. The agent knows what it's allowed to do before it tries.</p>
-      <p class="h-detail"><strong>Why for agents:</strong> A 403 mid-flow is a debugging nightmare for an agent. Agents need to know the boundaries of their authority at the start, in machine-readable form, and react to scope changes cleanly. <strong>Fails when:</strong> Scopes aren't visible to the agent. Scope names don't match capability names. Failure mode is generic 403 with no hint about which scope is missing.</p>
+      <p class="h-detail"><strong>Why for agents:</strong> A 403 mid-flow is a debugging nightmare for an agent. Agents need to know the boundaries of their authority at the start, in machine-readable form, and react to scope changes cleanly.</p>
+      <p class="h-detail"><strong>Fails when:</strong> Scopes aren't visible to the agent. Scope names don't match capability names. Failure mode is generic 403 with no hint about which scope is missing.</p>
     </div>
 
     <div class="heuristic">
@@ -546,7 +554,8 @@
         <span class="tag tag-reason">Reason-about</span>
       </div>
       <p class="h-rule">Names carry meaning. Similar things are named similarly. The lexicon agents see in tool/endpoint names matches the lexicon humans see in docs.</p>
-      <p class="h-detail"><strong>Why for agents:</strong> Agents lean on names harder than humans do because they often pick a tool from a name alone. Naming is the first and most-used affordance. Empirically, tool names have stronger influence on agent selection than descriptions (ToolTweak, 2025). <strong>Fails when:</strong> The same concept has three names. Internal jargon leaks into public names.</p>
+      <p class="h-detail"><strong>Why for agents:</strong> Agents lean on names harder than humans do because they often pick a tool from a name alone. Naming is the first and most-used affordance. Empirically, tool names have stronger influence on agent selection than descriptions (ToolTweak, 2025).</p>
+      <p class="h-detail"><strong>Fails when:</strong> The same concept has three names. Internal jargon leaks into public names.</p>
     </div>
 
     <div class="heuristic">
@@ -556,7 +565,8 @@
         <span class="tag tag-use">Use-effectively</span>
       </div>
       <p class="h-rule">Every action an agent takes is traceable, attributable, and visible to the customer in real time.</p>
-      <p class="h-detail"><strong>Why for agents:</strong> Agents operate at scale. One mistake propagates fast. Customers and admins need to see what an agent did, when, and on whose authority, both for trust and for recovery. <strong>Fails when:</strong> Agent actions aren't distinguishable from user actions in audit logs. No per-agent attribution.</p>
+      <p class="h-detail"><strong>Why for agents:</strong> Agents operate at scale. One mistake propagates fast. Customers and admins need to see what an agent did, when, and on whose authority, both for trust and for recovery.</p>
+      <p class="h-detail"><strong>Fails when:</strong> Agent actions aren't distinguishable from user actions in audit logs. No per-agent attribution.</p>
     </div>
   </section>
 
