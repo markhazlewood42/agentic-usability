@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent Usability Heuristics — A Framework for Designing Agent-Facing Surfaces</title>
+  <style>
+    :root {
+      --bg: #fafafa;
+      --surface: #ffffff;
+      --text: #1a1a2e;
+      --text-secondary: #4a4a68;
+      --accent: #2563eb;
+      --accent-light: #dbeafe;
+      --border: #e2e8f0;
+      --border-light: #f1f5f9;
+      --tag-reason: #eff6ff;
+      --tag-reason-text: #1e40af;
+      --tag-use: #fef3c7;
+      --tag-use-text: #92400e;
+      --code-bg: #f8fafc;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    header {
+      padding: 64px 0 48px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    header p.label {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    header h1 {
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    header .research-question {
+      font-size: 18px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      border-left: 3px solid var(--accent);
+      padding-left: 16px;
+      margin-bottom: 20px;
+    }
+
+    header .meta {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    header .meta a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    header .meta a:hover {
+      text-decoration: underline;
+    }
+
+    section {
+      padding: 48px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    section:last-of-type {
+      border-bottom: none;
+    }
+
+    h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    p {
+      margin-bottom: 12px;
+      color: var(--text-secondary);
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+
+    .intro-text {
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 720px;
+    }
+
+    .cluster-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    @media (max-width: 640px) {
+      .cluster-grid { grid-template-columns: 1fr; }
+    }
+
+    .cluster-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+    .cluster-card h3 {
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .cluster-card .cluster-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+
+    .cluster-card ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .cluster-card li {
+      font-size: 14px;
+      padding: 4px 0;
+      color: var(--text);
+    }
+
+    .cluster-card li span.hnum {
+      font-weight: 600;
+      color: var(--accent);
+      margin-right: 4px;
+    }
+
+    .heuristic {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 12px;
+    }
+
+    .heuristic .h-header {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .heuristic .h-number {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .heuristic .h-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .heuristic .h-rule {
+      font-size: 15px;
+      color: var(--text);
+      margin-bottom: 10px;
+      font-style: italic;
+    }
+
+    .heuristic .h-detail {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .heuristic .h-detail strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.02em;
+      vertical-align: middle;
+    }
+
+    .tag-reason {
+      background: var(--tag-reason);
+      color: var(--tag-reason-text);
+    }
+
+    .tag-use {
+      background: var(--tag-use);
+      color: var(--tag-use-text);
+    }
+
+    .ref-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .ref-list li {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .ref-list li:last-child {
+      border-bottom: none;
+    }
+
+    .ref-list .ref-title {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .ref-list .ref-note {
+      color: var(--text-secondary);
+    }
+
+    .ref-list a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .ref-list a:hover {
+      text-decoration: underline;
+    }
+
+    .collab-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 640px) {
+      .collab-grid { grid-template-columns: 1fr; }
+    }
+
+    .collab-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .collab-card .collab-name {
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    .collab-card .collab-team {
+      font-size: 13px;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .collab-card .collab-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .roadmap-item {
+      display: flex;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .roadmap-item:last-child {
+      border-bottom: none;
+    }
+
+    .roadmap-phase {
+      flex-shrink: 0;
+      width: 80px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      padding-top: 2px;
+    }
+
+    .roadmap-content h3 {
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .roadmap-content p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 0;
+    }
+
+    .status-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+
+    .status-active {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .status-next {
+      background: #f3f4f6;
+      color: #4b5563;
+    }
+
+    .concepts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 640px) {
+      .concepts-grid { grid-template-columns: 1fr; }
+    }
+
+    .concept-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .concept-card h3 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .concept-card p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .crosswalk-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      font-size: 14px;
+    }
+
+    .crosswalk-table th {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 2px solid var(--border);
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .crosswalk-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border-light);
+      vertical-align: top;
+    }
+
+    .crosswalk-table td:first-child {
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    .crosswalk-table td:last-child {
+      color: var(--text-secondary);
+    }
+
+    footer {
+      padding: 32px 0;
+      font-size: 13px;
+      color: var(--text-secondary);
+      border-top: 1px solid var(--border);
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <header>
+    <p class="label">Working Framework</p>
+    <h1>Agent Usability Heuristics</h1>
+    <div class="research-question">
+      What are the qualities of an API or CLI interface that make it easier or harder for an agent to reason about and use effectively?
+    </div>
+    <p class="meta">
+      Mark Hazlewood, Staff Product Designer, HubSpot Developer Product Group<br>
+      v0 — May 2026 &middot; <a href="https://github.com/markhazlewood42/agentic-usability">Source</a>
+    </p>
+  </header>
+
+  <section>
+    <h2>Why this framework</h2>
+    <p class="intro-text">
+      Nielsen wrote his 10 usability heuristics in 1994 for human users of GUIs. There is no equivalent canon for agents as consumers of APIs, CLIs, and tool surfaces.
+    </p>
+    <p class="intro-text">
+      Two things changed at once in 2025-2026. Agents became real consumers of API and tool surfaces (MCP, tool-use connectors, multi-step agent workflows). And platforms began committing to full API parity, meaning every product capability needs an API surface. That combination means APIs now have two distinct readers: human developers and AI agents. The constraints on each are different.
+    </p>
+    <p class="intro-text">
+      Some of what makes a surface usable for humans helps agents (consistent naming, good errors, clear scopes). Some doesn't (visual hierarchy, terse human-readable copy). Some things help agents specifically and barely register for humans (typed errors over prose, lean response shapes, self-describing schemas). This framework names the differences.
+    </p>
+  </section>
+
+  <section>
+    <h2>The 10 heuristics</h2>
+    <p style="margin-bottom: 20px;">Each heuristic includes a rule, why it matters for agents specifically, and what failure looks like.</p>
+
+    <div class="heuristic">
+      <div class="h-header">
+        <span class="h-number">H1</span>
+        <span class="h-title">Discoverability without trial-and-error</span>
+        <span class="tag tag-reason">Reason-about</span>
+      </div>
+      <p class="h-rule">The agent can find the right capability from a description of intent, not by trying things until something works.</p>
+      <p class="h-detail"><strong>Why for agents:</strong> Humans skim and recover from wrong choices visually. Agents recover by retrying, which is expensive in tokens and dangerous in side effects. <strong>Fails when:</strong> Two endpoints with overlapping responsibilities, no clear signal which is canonical. Names don't match the agent's natural framing of intent.</p>
+    </div>
+
+    <div class="heuristic">
+      <div class="h-header">
+        <span class="h-number">H2</span>
+        <span class="h-title">Predictable shapes</span>
+        <span class="tag tag-reason">Reason-about</span>
+      </div>
+      <p class="h-rule">Inputs and outputs are typed, deterministic, and consistent. The same concept has the same shape across the surface.</p>
+      <p class="h-detail"><strong>Why for agents:</strong> Agents pattern-match on shapes more than humans do. A <code>contact</code> that looks one way in one endpoint and another way three calls later is a hallucination magnet. <strong>Fails when:</strong> Pagination differs between resources. Date formats vary. ID fields named inconsistently.</p>
+    </div>
+
+    <div class="heuristic">
+      <div class="h-header">
+        <span class="h-number">H3</span>
+        <span class="h-title">Self-describing surface</span>
+        <span class="tag tag-reason">Reason-about</span>
+      </div>
+      <p class="h-rule">Every endpoint, tool, or command returns enough metadata to be understood without out-of-band documentation.</p>
+      <p class="h-detail"><strong>Why for agents:</strong> Agents have no prior context unless it was injected into the prompt. A self-describing surface lowers the cost of cold-start use. Schemas, examples, annotations, and inline help are first-class. <strong>Fails when:</strong> OpenAPI spec exists but isn't loadable by the agent. MCP tool descriptions are one-liners.</p>
+    </div>
+
+    <div class="heuristic">
+      <div class="h-header">
+        <span class="h-number">H4</span>
+        <span class="h-title">Errors that are machine-actionable</span>
+        <span class="tag tag-use">Use-effectively</span>
+      </div>
+      <p class="h-rule">Errors are typed, coded, and include structured recovery information. Prose alone fails.</p>
+      <p class="h-detail"><strong>Why for agents:</strong> Humans read "Sorry, that didn't work" and infer intent. Agents read it literally and either retry blindly or hallucinate a fix. An error is a second-chance prompt: a structured error that names the problem, lists valid options, and points to relevant docs enables near-100% recovery. <strong>Fails when:</strong> All errors are 500s with a string body. Validation errors don't identify the offending field.</p>
+    </div>
+
+    <div class="heuristic">
+      <div class="h-header">
+        <span class="h-number">H5</span>
+        <span class="h-title">Composability</span>
+        <span class="tag tag-use">Use-effectively</span>
+      </div>
+      <p class="h-rule">Outputs of one operation match inputs of related operations without translation.</p>
+      <p class="h-detail"><strong>Why for agents:</strong> Multi-step agent workflows chain calls. Every translation step (IDs, formats, references) is a place to fail. A composable surface lets the agent move data between calls without reshaping. <strong>Fails when:</strong> "List" returns IDs in one shape, "Get" wants a different shape. Reference fields aren't directly callable.</p>
+    </div>
+
+    <div class="heuristic">
+      <div class="h-header">
+        <span class="h-number">H6</span>
+        <span class="h-title">Idempotency and safe retry</span>
+        <span class="tag tag-use">Use-effectively</span>
+      </div>
+      <p class="h-rule">Operations declare their idempotency. Agents can retry on failure without guessing at side effects.</p>
+      <p class="h-detail"><strong>Why for agents:</strong> Agents retry. A lot. If the platform doesn't tell the agent which operations are safe to retry, the agent will either over-retry (duplicates) or under-retry (give up too easily). <strong>Fails when:</strong> No idempotency keys on writes. POST that's actually upsert, not documented as such.</p>
+    </div>
+
+    <div class="heuristic">
+      <div class="h-header">
+        <span class="h-number">H7</span>
+        <span class="h-title">Token economy</span>
+        <span class="tag tag-use">Use-effectively</span>
+      </div>
+      <p class="h-rule">Responses are lean by default and expandable on request. No mandatory bloat.</p>
+      <p class="h-detail"><strong>Why for agents:</strong> Every byte of response goes into a context window the agent has to pay for. A 50-field object when the agent needed two fields is taxation by API design. <strong>Fails when:</strong> No field selection. Default response includes deeply nested associations. Pagination defaults to absurdly large pages.</p>
+    </div>
+
+    <div class="heuristic">
+      <div class="h-header">
+        <span class="h-number">H8</span>
+        <span class="h-title">Scoped intent</span>
+        <span class="tag tag-use">Use-effectively</span>
+      </div>
+      <p class="h-rule">Authorization is granular and intelligible up front. The agent knows what it's allowed to do before it tries.</p>
+      <p class="h-detail"><strong>Why for agents:</strong> A 403 mid-flow is a debugging nightmare for an agent. Agents need to know the boundaries of their authority at the start, in machine-readable form, and react to scope changes cleanly. <strong>Fails when:</strong> Scopes aren't visible to the agent. Scope names don't match capability names. Failure mode is generic 403 with no hint about which scope is missing.</p>
+    </div>
+
+    <div class="heuristic">
+      <div class="h-header">
+        <span class="h-number">H9</span>
+        <span class="h-title">Naming as IA</span>
+        <span class="tag tag-reason">Reason-about</span>
+      </div>
+      <p class="h-rule">Names carry meaning. Similar things are named similarly. The lexicon agents see in tool/endpoint names matches the lexicon humans see in docs.</p>
+      <p class="h-detail"><strong>Why for agents:</strong> Agents lean on names harder than humans do because they often pick a tool from a name alone. Naming is the first and most-used affordance. Empirically, tool names have stronger influence on agent selection than descriptions (ToolTweak, 2025). <strong>Fails when:</strong> The same concept has three names. Internal jargon leaks into public names.</p>
+    </div>
+
+    <div class="heuristic">
+      <div class="h-header">
+        <span class="h-number">H10</span>
+        <span class="h-title">Observability and audit</span>
+        <span class="tag tag-use">Use-effectively</span>
+      </div>
+      <p class="h-rule">Every action an agent takes is traceable, attributable, and visible to the customer in real time.</p>
+      <p class="h-detail"><strong>Why for agents:</strong> Agents operate at scale. One mistake propagates fast. Customers and admins need to see what an agent did, when, and on whose authority, both for trust and for recovery. <strong>Fails when:</strong> Agent actions aren't distinguishable from user actions in audit logs. No per-agent attribution.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>How the heuristics cluster</h2>
+    <p>The core research question splits into two halves: "easier or harder to <em>reason about</em>" and "easier or harder to <em>use effectively</em>." Agent failure modes cluster differently across the two.</p>
+    <div class="cluster-grid">
+      <div class="cluster-card">
+        <h3>Reason-about</h3>
+        <p class="cluster-desc">Predict the surface before calling it. Failures show up as picking the wrong call or hallucinating shape.</p>
+        <ul>
+          <li><span class="hnum">H1</span> Discoverability</li>
+          <li><span class="hnum">H2</span> Predictable shapes</li>
+          <li><span class="hnum">H3</span> Self-describing surface</li>
+          <li><span class="hnum">H9</span> Naming as IA</li>
+        </ul>
+      </div>
+      <div class="cluster-card">
+        <h3>Use-effectively</h3>
+        <p class="cluster-desc">Act on the surface and recover well. Failures show up as runtime errors, retry storms, scope mismatches, and trust gaps.</p>
+        <ul>
+          <li><span class="hnum">H4</span> Machine-actionable errors</li>
+          <li><span class="hnum">H5</span> Composability</li>
+          <li><span class="hnum">H6</span> Idempotency</li>
+          <li><span class="hnum">H7</span> Token economy</li>
+          <li><span class="hnum">H8</span> Scoped intent</li>
+          <li><span class="hnum">H10</span> Observability</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Key concepts</h2>
+    <p>Vocabulary the framework builds on. Each concept either originates in the literature (cited) or is a synthesis the framework owns.</p>
+    <div class="concepts-grid">
+      <div class="concept-card">
+        <h3>Agent-Computer Interface (ACI)</h3>
+        <p>The designed surface an agent reads, calls, and interprets. Coined by Yang et al. (SWE-agent, 2024). Interface design alone, independent of the model, materially lifts task success.</p>
+      </div>
+      <div class="concept-card">
+        <h3>Schema-as-prompt</h3>
+        <p>Every field name, type, and enum value in a tool schema is consumed by an LLM as natural language. There's no separation between "API contract" and "instructions to the model." The contract is a prompt fragment.</p>
+      </div>
+      <div class="concept-card">
+        <h3>Tool name as primary affordance</h3>
+        <p>Empirically, tool names have stronger influence on agent selection than descriptions (ToolTweak, 2025). Rename-not-redocument is the higher-leverage intervention.</p>
+      </div>
+      <div class="concept-card">
+        <h3>Context economy</h3>
+        <p>Every token in a tool spec or response payload competes for finite context window space. Information density per token is a usability axis, the way visual hierarchy is for human UIs.</p>
+      </div>
+      <div class="concept-card">
+        <h3>Error as second-chance prompt</h3>
+        <p>Errors aren't just diagnostics. They're another input to the agent's next decision. A structured error enables ~100% recovery. A 500 with a string body forces blind retry or hallucination.</p>
+      </div>
+      <div class="concept-card">
+        <h3>pass^k reliability</h3>
+        <p>From &tau;-bench (Yao et al., 2024): the probability the agent succeeds consistently across k attempts. Frontier agents: pass^1 &asymp; 50%, pass^8 &lt; 25%. The gap is the reliability tax, much of it attributable to interface ambiguity.</p>
+      </div>
+      <div class="concept-card">
+        <h3>Reliability tax</h3>
+        <p>Framework-coined term. The amount of agent failure attributable to interface ambiguity rather than model capability. Improving the surface reduces the tax even when the model stays the same.</p>
+      </div>
+      <div class="concept-card">
+        <h3>Surface vs. capability</h3>
+        <p>A platform can fetch contacts (capability). Its particular set of endpoints, parameter names, error shapes, and docs is the surface. Most benchmarks measure both tangled together. This framework separates them.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Position relative to existing work</h2>
+    <p>Where this framework sits in the landscape. Not a replacement for any of these, but a distinct contribution.</p>
+    <table class="crosswalk-table">
+      <thead>
+        <tr>
+          <th>Framework</th>
+          <th>Relationship</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Nielsen's 10 (1994)</td>
+          <td>Mirror the format and derivation method. Extend from human GUI to agent-facing surfaces.</td>
+        </tr>
+        <tr>
+          <td>Cognitive Dimensions</td>
+          <td>Borrow dimensional thinking. Several CDs translate cleanly (viscosity, hidden dependencies, role-expressiveness).</td>
+        </tr>
+        <tr>
+          <td>Clarke API-CD (2004)</td>
+          <td>Direct academic ancestor. Clarke did persona-driven API usability for humans. This does it for agents.</td>
+        </tr>
+        <tr>
+          <td>Bloch (2006)</td>
+          <td>Bridge insight: "Every API is a little language." Agents read that language as a prompt, not as documentation.</td>
+        </tr>
+        <tr>
+          <td>MS HAX (2019)</td>
+          <td>Different subject. HAX guides how agents act on humans. This guides how humans build surfaces for agents.</td>
+        </tr>
+        <tr>
+          <td>Anthropic <em>Writing Tools</em></td>
+          <td>Most direct contemporary. This extends with persona conditioning, cross-surface scope (API+CLI+MCP), and governance as a first-class dimension.</td>
+        </tr>
+        <tr>
+          <td>SWE-agent / ACI</td>
+          <td>Adopt the "ACI" term. Provide the heuristics for designing a good one across API, CLI, and MCP.</td>
+        </tr>
+        <tr>
+          <td>12-Factor Agents</td>
+          <td>Application-level analogue. This framework is one layer below: the surface, not the agent app.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Top references</h2>
+    <p>The 10 most important sources, in reading order. Full annotated bibliography in the <a href="https://github.com/markhazlewood42/agentic-usability">repo</a>.</p>
+    <ol class="ref-list">
+      <li>
+        <span class="ref-title">Yang et al. (2024). SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering.</span>
+        <span class="ref-note"> NeurIPS 2024. Coins "ACI" and shows interface design alone lifts task success.</span>
+        <a href="https://arxiv.org/abs/2405.15793">arXiv</a>
+      </li>
+      <li>
+        <span class="ref-title">Anthropic. Writing Effective Tools for AI Agents.</span>
+        <span class="ref-note"> Eight principles for tool design. The most direct competing artifact.</span>
+        <a href="https://www.anthropic.com/engineering/writing-tools-for-agents">Link</a>
+      </li>
+      <li>
+        <span class="ref-title">Yao et al. (2024). &tau;-bench: Benchmarking Tool-Agent-User Interaction.</span>
+        <span class="ref-note"> Introduces pass^k. Frontier agents succeed &lt;50% consistently.</span>
+        <a href="https://arxiv.org/abs/2406.12045">arXiv</a>
+      </li>
+      <li>
+        <span class="ref-title">Nielsen, J. (1994). Enhancing the Explanatory Power of Usability Heuristics.</span>
+        <span class="ref-note"> The derivation method (factor analysis of 249 problems) is the credibility template.</span>
+      </li>
+      <li>
+        <span class="ref-title">Clarke, S. (2004). Describing and Measuring API Usability with Cognitive Dimensions.</span>
+        <span class="ref-note"> The human-API precursor. Persona-driven API usability studies at Microsoft Research.</span>
+        <a href="https://www.cl.cam.ac.uk/~afb21/CognitiveDimensions/workshop2005/Clarke_position_paper.pdf">PDF</a>
+      </li>
+      <li>
+        <span class="ref-title">Bloch, J. (2006). How to Design a Good API and Why It Matters.</span>
+        <span class="ref-note"> "Every API is a little language." Agents read that language as a prompt.</span>
+        <a href="https://research.google/pubs/how-to-design-a-good-api-and-why-it-matters/">Link</a>
+      </li>
+      <li>
+        <span class="ref-title">Anthropic. Code Execution with MCP: Building More Efficient AI Agents.</span>
+        <span class="ref-note"> Agent usability as a system architecture choice, not just tool design.</span>
+        <a href="https://www.anthropic.com/engineering/code-execution-with-mcp">Link</a>
+      </li>
+      <li>
+        <span class="ref-title">Horthy, D. 12-Factor Agents.</span>
+        <span class="ref-note"> Application-level reliability principles. This framework is one layer below.</span>
+        <a href="https://github.com/humanlayer/12-factor-agents">GitHub</a>
+      </li>
+      <li>
+        <span class="ref-title">Luo et al. (2025). MCP-Universe: Benchmarking LLMs with Real-World MCP Servers.</span>
+        <span class="ref-note"> Frontier models score 33-44% on MCP tasks.</span>
+        <a href="https://arxiv.org/abs/2508.14704">arXiv</a>
+      </li>
+      <li>
+        <span class="ref-title">Willison, S. The Lethal Trifecta for AI Agents.</span>
+        <span class="ref-note"> Private data + untrusted content + external comms = structural exfiltration risk.</span>
+        <a href="https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/">Link</a>
+      </li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Parallel workstreams</h2>
+    <p>Others working on adjacent problems. A key next step is syncing across these efforts so the work compounds instead of duplicating.</p>
+    <div class="collab-grid">
+      <div class="collab-card">
+        <div class="collab-name">Edward Langan</div>
+        <div class="collab-team">API Foundations</div>
+        <p class="collab-desc">Epic Week talk: "Making Our Public APIs Work for Humans AND Agents." Research on where human and agent API needs overlap (mostly) and diverge (sandboxes, idempotency).</p>
+      </div>
+      <div class="collab-card">
+        <div class="collab-name">Rachel Kellam</div>
+        <div class="collab-team">API Foundations</div>
+        <p class="collab-desc">Evaluations for how well agents navigate the API. Automations to flag APIs out of compliance with the API Design Guide.</p>
+      </div>
+      <div class="collab-card">
+        <div class="collab-name">Roger Brown</div>
+        <div class="collab-team">CLI</div>
+        <p class="collab-desc">Synthetic agent testing with different model/harness combos. Automating Critical User Journeys via CLI for agent-augmented productivity.</p>
+      </div>
+      <div class="collab-card">
+        <div class="collab-name">SJ Morris</div>
+        <div class="collab-team">DevRel</div>
+        <p class="collab-desc">Maintains a list of agent builder contacts for research. Connective tissue between internal framework work and external developer community.</p>
+      </div>
+      <div class="collab-card">
+        <div class="collab-name">Matt Rollender</div>
+        <div class="collab-team">Breeze Apps</div>
+        <p class="collab-desc">Built an internal agent that debugs how well agents can use developer docs and CLI. Potential test harness for validating heuristics empirically.</p>
+      </div>
+      <div class="collab-card">
+        <div class="collab-name">Hina Shah</div>
+        <div class="collab-team">UXR</div>
+        <p class="collab-desc">"Synthetic Users" concept for product feedback within UX Research. Complementary methodology: synthetic users test the product, this framework tests the API/CLI/MCP surface.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Roadmap</h2>
+
+    <div class="roadmap-item">
+      <div class="roadmap-phase">Phase 1</div>
+      <div class="roadmap-content">
+        <h3>Heuristics stabilize <span class="status-badge status-active">In progress</span></h3>
+        <p>v0 to v1 iteration. Add candidate heuristics (versioning, docs-as-surface, trust boundaries). Pressure-test against real surfaces. Research grounding complete: annotated bibliography, frameworks crosswalk, concepts glossary, and shape-and-positioning decision doc all drafted.</p>
+      </div>
+    </div>
+
+    <div class="roadmap-item">
+      <div class="roadmap-phase">Phase 2</div>
+      <div class="roadmap-content">
+        <h3>Scorecard / rubric <span class="status-badge status-next">Next</span></h3>
+        <p>Build a Must / Should / Nice rubric per heuristic. Use it to evaluate a real API, a CLI surface, and an MCP tool.</p>
+      </div>
+    </div>
+
+    <div class="roadmap-item">
+      <div class="roadmap-phase">Phase 3</div>
+      <div class="roadmap-content">
+        <h3>Worked examples <span class="status-badge status-next">Planned</span></h3>
+        <p>Apply the rubric to a well-known API surface. Document findings as a case study. Use the case study to refine both rubric and heuristics.</p>
+      </div>
+    </div>
+
+    <div class="roadmap-item">
+      <div class="roadmap-phase">Phase 4</div>
+      <div class="roadmap-content">
+        <h3>Share <span class="status-badge status-next">Planned</span></h3>
+        <p>Internal readout to leadership and API Council. Possibly external: short paper or post if the framework lands well internally.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      Last updated May 2026. This is a working draft. Feedback welcome via <a href="https://github.com/markhazlewood42/agentic-usability/issues">GitHub issues</a> or direct message.
+    </div>
+  </footer>
+
+</div>
+
+</body>
+</html>
