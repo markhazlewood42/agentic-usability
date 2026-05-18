@@ -1,5 +1,5 @@
 # Agentic Usability — Project Status
-_Last updated: 2026-05-05 (Phase 1 research-grounding complete; prior-art bibliography, frameworks crosswalk, concepts glossary, annotated heuristics, and shape-and-positioning decision doc all drafted; Track 4 skill scaffolding deferred — see Files section)_
+_Last updated: 2026-05-07 (Eco All-Hands surfaced multiple parallel workstreams — Ed Langan's Epic Week talk, Rachel Kellam's agent API evaluations, Roger Brown's synthetic agent testing, Matt Rollender's Breeze Apps debugging agent; contacts and references captured in knowledge/eco-allhands-2026-05-07.md and todo.md)_
 
 ---
 
@@ -13,7 +13,7 @@ The question is deliberately about *qualities of the interface*, not about agent
 
 ## What this is
 
-A framework for evaluating and designing the usability of APIs, CLIs, and MCP tool surfaces from the perspective of AI agents as consumers. The parallel reference is Nielsen's 10 usability heuristics (1994) for human GUI usability — there's no equivalent canon for agents, and the agent era now demands one.
+A framework for evaluating and designing the usability of APIs, CLIs, and MCP tool surfaces from the perspective of AI agents as consumers. The parallel reference is Nielsen's 10 usability heuristics (1994) for human GUI usability:  There's no equivalent canon for agents, and the agent era now demands one.
 
 Started 2026-05-04, triggered by HubSpot CPTO Duncan Lennox's open-ecosystem vision (`knowledge/strategy-docs/cpto-vision-2026-05.md`) committing publicly to "anything you can do inside HubSpot, you should be able to do through an API." With agents now first-class consumers of the platform's API surface, agent usability becomes a distinct design variable that needs heuristics, criteria, and evaluation tools.
 
@@ -96,10 +96,26 @@ None mapped (personal project, no team channel). If/when this becomes a shared w
 | `knowledge/prior-art.md` | Annotated bibliography with top-10 reading order |
 | `knowledge/frameworks-crosswalk.md` | Position relative to existing frameworks |
 | `knowledge/concepts-glossary.md` | Load-bearing vocabulary v1 must speak |
+| `knowledge/eco-allhands-2026-05-07.md` | Contacts, parallel workstreams, and design tensions from Eco All-Hands chat thread |
 | `decisions/2026-05-shape-and-positioning.md` | Open Phase-1 decision doc on artifact shape, audience, term, derivation method |
 | `status.md` | This file |
 
 **Deferred for a follow-up session:** Track 4 skill scaffolding (`/lit-review` and `/heuristic-eval`). Workspace `skills/` directory is currently in an unexpected modified state (every skill file has been emptied locally vs git HEAD); not safe to add new skill files into that state without first resolving what's going on with the existing ones.
+
+## Internal collaborators (from Eco All-Hands 2026-05-07)
+
+See `knowledge/eco-allhands-2026-05-07.md` for full context.
+
+| Person | Team / Role | Relevant work | Status |
+|---|---|---|---|
+| Edward Langan | API Foundations | Epic Week talk "Making Our Public APIs Work for Humans AND Agents"; research on human/agent API needs overlap | Follow up — get talk, compare with heuristics |
+| Rachel Kellam | API Foundations | Agent API evaluations; API Design Guide compliance automation | Follow up — heuristics as evaluation criteria |
+| Matt Rollender | Breeze Apps | Internal agent that debugs how well agents use dev docs + CLI | Follow up — get link to tool |
+| Roger Brown | CLI | Synthetic agent testing (model/harness combos); CUJ automation via CLI | Follow up — empirical validation alignment |
+| SJ Morris | DevRel | Has list of agent builder contacts for research | Follow up — get the DM'd list |
+| Hina Shah | UXR | "Synthetic Users" concept; has a thinking group | Follow up — join thinking group |
+| Chirag Chadha | — | Harness research reference (YouTube video) | Watch video |
+| Sejal Parikh | — | Pushed back on "same for both" — agents stitch calls, humans don't | Captured as design tension |
 
 ## Cross-references
 
