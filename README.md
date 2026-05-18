@@ -6,6 +6,8 @@ type: project
 
 # Agentic Usability
 
+**[Read the framework overview](https://markhazlewood42.github.io/agentic-usability/)** — all 10 heuristics, key concepts, references, and current status.
+
 **Core research question this work aims to answer:**
 
 > What are the qualities of an API or CLI interface that make it easier or harder for an agent to reason about and use effectively?
