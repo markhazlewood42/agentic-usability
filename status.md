@@ -1,3 +1,13 @@
+---
+type: status
+title: Agentic Usability — Project Status
+project: agentic-usability
+created: 2026-07-01
+updated: 2026-08-26
+tags: [status]
+memory: [project-agentic-usability]
+---
+
 # Agentic Usability — Project Status
 _Last updated: 2026-05-05 (Phase 1 research-grounding complete; prior-art bibliography, frameworks crosswalk, concepts glossary, annotated heuristics, and shape-and-positioning decision doc all drafted; Track 4 skill scaffolding deferred — see Files section)_
 
@@ -116,3 +126,7 @@ None mapped (personal project, no team channel). If/when this becomes a shared w
 **On collaboration with Claude Code:** Use this workspace to iterate. Each heuristic deserves a focused pass: real examples, edge cases, what fails the test, what passes it. Mark + Claude as a writing/thinking pair fits the model the rest of home-base operates on.
 
 **On the name:** "Agentic usability" works for now. Alternatives considered: "agent UX," "AX (agent experience)," "machine-readable usability." If/when this goes external, may want to re-test the name. Internal use: agentic usability is fine.
+
+## 2026-10-22: Phase 2 instrument exists
+
+Agent Gauntlet (`projects/agent-gauntlet/`, github.com/markhazlewood42/agent-gauntlet) is the scorecard instrument for H1-H10: it probes an MCP server or CLI with small agents, detects stumbles, and scores each heuristic with evidence. Three real scorecards (good sample 9.9, bad sample 6.5, the MCP filesystem server 8.2) are in its `docs/BUILD-LOG.md`. Its `docs/SCORING.md` is a draft of the Phase 2 rubric weights. Next: review the formula against the roadmap and decide whether Gauntlet output becomes the Phase 3 case study format.
