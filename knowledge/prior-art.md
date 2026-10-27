@@ -1,7 +1,13 @@
 ---
+type: topic
+title: Agentic Usability — Prior Art
+project: agentic-usability
+created: 2026-07-01
+updated: 2026-08-26
+tags: [agentic-usability, prior-art, bibliography]
+memory: [project-agentic-usability]
 name: agentic-usability-prior-art
 description: Annotated bibliography of academic and industry sources informing the agent usability heuristics framework. Organized by tradition, with top-10 reading order at top.
-type: project
 ---
 
 # Prior Art — Agent Usability

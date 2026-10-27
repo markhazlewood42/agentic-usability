@@ -1,7 +1,13 @@
 ---
+type: topic
+title: Agentic Usability — Frameworks Crosswalk
+project: agentic-usability
+created: 2026-07-01
+updated: 2026-08-26
+tags: [agentic-usability, prior-art]
+memory: [project-agentic-usability]
 name: agentic-usability-frameworks-crosswalk
 description: Crosswalk between Mark's agent usability framework and existing precursors / contemporaries. For each existing framework, where v1 sits — extends, mirrors, or distinguishes from it. Used to position v1 in the literature.
-type: project
 ---
 
 # Frameworks Crosswalk

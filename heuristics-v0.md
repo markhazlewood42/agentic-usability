@@ -1,7 +1,13 @@
 ---
+type: topic
+title: Agent Usability Heuristics — v0
+project: agentic-usability
+created: 2026-05-04
+updated: 2026-08-26
+tags: [agentic-usability, heuristics]
+memory: [project-agentic-usability]
 name: agentic-usability-heuristics-v0
 description: First-cut 10 heuristics for evaluating agent usability of APIs, CLIs, and MCP tool surfaces. Working draft to iterate on. Use when reviewing a developer platform surface for agent-readiness or framing what agent usability means.
-type: project
 ---
 
 # Agent Usability Heuristics — v0

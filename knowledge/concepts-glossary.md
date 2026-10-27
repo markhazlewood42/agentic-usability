@@ -1,7 +1,13 @@
 ---
+type: topic
+title: Agentic Usability — Concepts Glossary
+project: agentic-usability
+created: 2026-07-01
+updated: 2026-08-26
+tags: [agentic-usability, glossary]
+memory: [project-agentic-usability]
 name: agentic-usability-concepts-glossary
 description: Load-bearing concepts the v1 agent usability framework must engage with. Each entry is a paragraph definition with the source and how it lands in v1.
-type: project
 ---
 
 # Concepts Glossary

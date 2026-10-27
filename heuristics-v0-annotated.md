@@ -1,7 +1,13 @@
 ---
+type: topic
+title: Agent Usability Heuristics — v0 Annotated
+project: agentic-usability
+created: 2026-05-04
+updated: 2026-08-26
+tags: [agentic-usability, heuristics, prior-art]
+memory: [project-agentic-usability]
 name: agentic-usability-heuristics-v0-annotated
 description: v0 heuristics annotated with prior art, distinct contribution, and empirical hooks. Pressure-tests v0 against the literature scan. Reading this lands the framework in the academic and industry context before v1 stabilizes.
-type: project
 ---
 
 # Agent Usability Heuristics — v0, Annotated

@@ -1,3 +1,13 @@
+---
+type: project-doc
+title: Agentic Usability — Shape and Positioning Decisions
+project: agentic-usability
+created: 2026-05-01
+updated: 2026-08-26
+tags: [decisions, positioning]
+memory: [project-agentic-usability]
+---
+
 # Decision: Framework shape and positioning for v1
 
 ## Status
